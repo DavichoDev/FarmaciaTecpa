@@ -5,6 +5,8 @@
  */
 package farmaciatecpa;
 
+import com.backClasses.DetalleVenta;
+
 /**
  *
  * @author gamer
@@ -273,7 +275,10 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        // TODO add your handling code here:
+        ConsultaDetalle detalle = new ConsultaDetalle();
+        detalle.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        detalle.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
