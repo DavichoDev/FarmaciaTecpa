@@ -76,6 +76,7 @@ public class addVentas extends javax.swing.JFrame implements Printable {
 
     //LIMPIA LAS VARIABLES
     private void cleanAll() {
+        costoAd = 0f;
         finalTemp = 0;
         IVA_acum = 0f;
         subTotal = 0f;
@@ -152,8 +153,10 @@ public class addVentas extends javax.swing.JFrame implements Printable {
 
                         costoAd += res.getFloat("precioCompra_prod");
                         Total += res.getFloat("precioVenta_prod");
-
+                        System.out.println("TOTAL VENTA: " + Total);
+                        System.out.println("TOTAL COMPRA: " + costoAd);
                         gananciaRelativa = Total - costoAd;
+                        System.out.println("GREL: " + gananciaRelativa);
                         gananciaReal = subTotalVenta - subTotal;
 
                         this.lista.add(venta);
@@ -434,9 +437,10 @@ public class addVentas extends javax.swing.JFrame implements Printable {
         jCheckBox2.setText("Validar Productos Controlados");
 
         jButton7.setBackground(new java.awt.Color(255, 255, 255));
-        jButton7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton7.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jButton7.setForeground(new java.awt.Color(204, 0, 0));
-        jButton7.setText("Cerrar");
+        jButton7.setText("X");
+        jButton7.setBorder(null);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -502,14 +506,14 @@ public class addVentas extends javax.swing.JFrame implements Printable {
                         .addGap(30, 30, 30))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton7))))
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(jButton5))
@@ -524,7 +528,9 @@ public class addVentas extends javax.swing.JFrame implements Printable {
                             .addComponent(jButton3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
@@ -548,14 +554,11 @@ public class addVentas extends javax.swing.JFrame implements Printable {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton6)
-                                .addComponent(jCheckBox2)))
-                        .addContainerGap())
-                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jButton2)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton6)
+                        .addComponent(jCheckBox2)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -596,7 +599,7 @@ public class addVentas extends javax.swing.JFrame implements Printable {
                 JOptionPane.showMessageDialog(rootPane, "Ingrese correctamente los datos");
 
             } else {
-                if (Float.parseFloat(jTextField5.getText()) > Total ||Float.parseFloat(jTextField5.getText()) == Total) {
+                if (Float.parseFloat(jTextField5.getText()) > Total || Float.parseFloat(jTextField5.getText()) == Total) {
 
                     String cambio = String.format("%.2f", Float.parseFloat(jTextField5.getText()) - Total);
 
@@ -660,6 +663,8 @@ public class addVentas extends javax.swing.JFrame implements Printable {
                         pj.print();
 
                     } catch (PrinterException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "¡No se pudo imprimir el comprobante,"
+                                + " revise la impresora!");
                         ex.printStackTrace();
                     }
                     JOptionPane.showMessageDialog(rootPane, "Venta registrada");
@@ -1070,10 +1075,10 @@ public class addVentas extends javax.swing.JFrame implements Printable {
                         String nombre = lista.get(i).getNombre();
                         if (nombre.length() < 10) {
                             espacios = 10 - nombre.length();
-                            show = String.format("%-"+espacios+"s", nombre);
+                            show = String.format("%-" + espacios + "s", nombre);
                         } else {
-                            show = nombre.substring(0,9);
-                        }             
+                            show = nombre.substring(0, 9);
+                        }
                         g2d.drawString("   " + lista.get(i).getCantidad()
                                 + "        " + show
                                 + "         " + lista.get(i).getPrecio() + "", 10, y);

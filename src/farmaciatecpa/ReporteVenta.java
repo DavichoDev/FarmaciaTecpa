@@ -8,7 +8,6 @@ package farmaciatecpa;
 import com.backClasses.Conexion;
 import com.backClasses.Ventas;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -151,9 +150,12 @@ public class ReporteVenta extends javax.swing.JFrame {
     dateChooserCombo1.setFieldFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, 20));
     dateChooserCombo1.setNavigateFont(new java.awt.Font("Serif", java.awt.Font.PLAIN, 20));
 
+    jButton2.setBackground(new java.awt.Color(255, 255, 255));
     jButton2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
     jButton2.setForeground(new java.awt.Color(204, 0, 51));
-    jButton2.setText("Cerrar");
+    jButton2.setText("X");
+    jButton2.setActionCommand("X");
+    jButton2.setBorder(null);
     jButton2.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton2ActionPerformed(evt);
@@ -192,19 +194,18 @@ public class ReporteVenta extends javax.swing.JFrame {
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(10, 10, 10)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addComponent(jScrollPane1)
-                    .addContainerGap())
+                .addComponent(jScrollPane1)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addContainerGap())
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(252, 252, 252)
             .addComponent(jLabel1)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton2))
+            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

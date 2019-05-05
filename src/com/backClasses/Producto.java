@@ -36,16 +36,19 @@ public class Producto {
         this.preVentaProducto = preVentaProducto;
     }
 
-    public Producto(String codProducto, String nomProducto,String descProducto, String susProducto, float cantProducto, float preVentaProducto) {
+    public Producto(String codProducto, String nomProducto, String descProducto,
+            String susProducto, float cantProducto, float preVentaProducto) {
         this.codProducto = codProducto;
         this.nomProducto = nomProducto;
         this.desProducto = descProducto;
         this.susProducto = susProducto;
         this.cantProducto = cantProducto;
         this.preVentaProducto = preVentaProducto;
+
     }
-    
-        public Producto(String codProducto, String nomProducto,String tipoProducto,String descProducto, String susProducto, float cantProducto, float preVentaProducto) {
+
+    public Producto(String codProducto, String nomProducto, String tipoProducto,
+            String descProducto, String susProducto, float cantProducto, float preVentaProducto, float preCompra) {
         this.codProducto = codProducto;
         this.nomProducto = nomProducto;
         this.tipProducto = tipoProducto;
@@ -53,8 +56,8 @@ public class Producto {
         this.susProducto = susProducto;
         this.cantProducto = cantProducto;
         this.preVentaProducto = preVentaProducto;
+        this.preCompraProducto = preCompra;
     }
-    
 
     public float getPreCompraProducto() {
         return preCompraProducto;

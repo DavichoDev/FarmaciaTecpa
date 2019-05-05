@@ -96,9 +96,11 @@ public class Reportes extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jButton2.setForeground(new java.awt.Color(153, 0, 0));
-        jButton2.setText("Salir");
+        jButton2.setText("X");
+        jButton2.setBorder(null);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -110,9 +112,9 @@ public class Reportes extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -120,26 +122,26 @@ public class Reportes extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(31, 31, 31))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(259, 259, 259))
+                .addGap(232, 232, 232)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addComponent(jButton2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jComboBox1)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -199,7 +201,8 @@ public class Reportes extends javax.swing.JFrame {
                             res.getString("desc_prod"),
                             res.getString("sust_prod"),
                             res.getFloat("cant_prod"),
-                            res.getFloat("precioVenta_prod")
+                            res.getFloat("precioVenta_prod"),
+                            res.getFloat("precioCompra_prod")
                     );
                     listaProd.add(producto);
 
@@ -274,17 +277,13 @@ public class Reportes extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
+                new Object[][]{},
+                new String[]{}
         ));
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void mostrarProductos() {
-        String matrix[][] = new String[listaProd.size()][7];
+        String matrix[][] = new String[listaProd.size()][8];
 
         for (int i = 0; i < listaProd.size(); i++) {
             matrix[i][0] = listaProd.get(i).getCodProducto();
@@ -294,12 +293,13 @@ public class Reportes extends javax.swing.JFrame {
             matrix[i][4] = listaProd.get(i).getSusProducto();
             matrix[i][5] = String.valueOf(listaProd.get(i).getCantProducto());
             matrix[i][6] = String.valueOf(listaProd.get(i).getPreVentaProducto());
+            matrix[i][7] = String.valueOf(listaProd.get(i).getPreCompraProducto());
         }
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 matrix,
                 new String[]{
-                    "Codigo de producto", "Nombre","Tipo", "Descripción", "Sustancia", "Cantidad", "Precio"
+                    "Codigo de producto", "Nombre", "Tipo", "Descripción", "Sustancia", "Cantidad", "Precio","Precio Adq"
                 }
         )
         );
@@ -341,14 +341,13 @@ public class Reportes extends javax.swing.JFrame {
             matrix[i][9] = String.valueOf(listaVenta.get(i).getGananciaRelativa());
             matrix[i][10] = String.valueOf(listaVenta.get(i).getGananciaReal());
 
-
         }
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 matrix,
                 new String[]{
                     "No.Venta", "FolioReceta", "Fecha", "SubtotalVend", "SubtotalAdq", "IVAxPag",
-                    "IVAxCob","CostoAdq","CTotal","GRelativa","GNeta"
+                    "IVAxCob", "CostoAdq", "CTotal", "GRelativa", "GNeta"
                 }
         )
         );

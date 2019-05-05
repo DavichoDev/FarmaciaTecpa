@@ -17,14 +17,24 @@ public class DetalleVenta {
     private float ivaDeVenta;
     private float subTotalVenta;
     private float totalDeVenta;
+    private float totalAdq;
 
-    public DetalleVenta(String idProducto,String nombreProducto, float cantidadProducto, float ivaDeVenta, float subTotalVenta, float totalDeVenta) {
+    public DetalleVenta(String idProducto,String nombreProducto, float cantidadProducto, float ivaDeVenta, float subTotalVenta, float totalDeVenta, float totalAdq) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.cantidadProducto = cantidadProducto;
         this.ivaDeVenta = ivaDeVenta;
         this.subTotalVenta = subTotalVenta;
         this.totalDeVenta = totalDeVenta;
+        this.totalAdq = totalAdq;
+    }
+
+    public float getTotalAdq() {
+        return totalAdq;
+    }
+
+    public void setTotalAdq(float totalAdq) {
+        this.totalAdq = totalAdq;
     }
 
     public String getNombreProducto() {
