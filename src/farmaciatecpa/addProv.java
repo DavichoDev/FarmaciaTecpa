@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -156,8 +158,8 @@ public class addProv extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -204,6 +206,12 @@ public class addProv extends javax.swing.JFrame {
 
         OPBase op = new OPBase();
 
+        String email_check = jTextField5.getText();
+        String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@"
+                + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
+        Pattern pattern = Pattern.compile(emailPattern);
+        Matcher matcher = pattern.matcher(email_check);
+
         String nombre = jTextField2.getText();
         String direccion = jTextField4.getText();
         String telefono = jTextField3.getText();
@@ -214,38 +222,40 @@ public class addProv extends javax.swing.JFrame {
         try {
 
             PreparedStatement stm = reg.prepareStatement(qry);
+            if (matcher.matches()) {
+                if (jTextField3.getText().length() == 10) {
+                    if (op.compararNombre(nombre)) {
+                        stm.setString(1, nombre.toUpperCase());
 
-            if (op.compararNombre(nombre)) {
-                stm.setString(1, nombre.toUpperCase());
+                        if (jTextField2.getText().length() != 0
+                                && jTextField3.getText().length() != 0
+                                && jTextField4.getText().length() != 0
+                                && jTextField5.getText().length() != 0) {
 
-                if (jTextField2.getText().length() != 0
-                        && jTextField3.getText().length() != 0
-                        && jTextField4.getText().length() != 0
-                        && jTextField5.getText().length() != 0) {
+                            stm.setString(2, telefono.toUpperCase());
+                            stm.setString(3, direccion.toUpperCase());
+                            stm.setString(4, email);
+                            stm.executeUpdate();
 
-                    if (jTextField3.getText().length() > 10 || jTextField3.getText().length() < 10) {
-                        JOptionPane.showMessageDialog(rootPane, "El numero telefonico debe ser de 10 digitos.");
-                        jTextField3.setText(null);
+                            JOptionPane.showMessageDialog(rootPane, "Datos registrados correctamente");
+
+                            jTextField2.setText(null);
+                            jTextField3.setText(null);
+                            jTextField4.setText(null);
+                            jTextField5.setText(null);
+
+                        } else {
+                            JOptionPane.showMessageDialog(rootPane, "No se llenaron todos los campos");
+                        }
                     } else {
-                        stm.setString(2, telefono.toUpperCase());
+                        JOptionPane.showMessageDialog(rootPane, "ERROR, este proveedor ya esxiste");
                     }
-
-                    stm.setString(3, direccion.toUpperCase());
-                    stm.setString(4, email.toUpperCase());
-                    stm.executeUpdate();
-
-                    JOptionPane.showMessageDialog(rootPane, "Datos registrados correctamente");
-
-                    jTextField2.setText(null);
-                    jTextField3.setText(null);
-                    jTextField4.setText(null);
-                    jTextField5.setText(null);
-
                 } else {
-                    JOptionPane.showMessageDialog(rootPane, "No se llenaron todos los campos");
+                    JOptionPane.showMessageDialog(rootPane, "ERROR, El numero telefonico debe ser de 10 digitos");
+
                 }
             } else {
-                JOptionPane.showMessageDialog(rootPane, "ERROR, este proveedor ya esxiste");
+                JOptionPane.showMessageDialog(rootPane, "ERROR, Debes seguir el formato de un e-mail ejemplo: example@text.com");
             }
         } catch (SQLException ex) {
 

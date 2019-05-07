@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -322,10 +324,15 @@ public class addCambioProv extends javax.swing.JFrame {
             String comboBox = (String) jComboBox1.getSelectedItem();
             boolean eliminado = false;
             String nombreProv = jTextField2.getText();
-            
+            String email_check = jTextField6.getText();
+            String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@"
+                    + "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
+            Pattern pattern = Pattern.compile(emailPattern);
+            Matcher matcher = pattern.matcher(email_check);
+
 //PARA MODIFICAR
             if (comboBox.equals("Modificar")) {
-                q = "UPDATE Proveedores SET telefono_prv = ?, dir_prv = ?, email_prv = ? WHERE nombre_prv = '"+nombreProv+"'";
+                q = "UPDATE Proveedores SET telefono_prv = ?, dir_prv = ?, email_prv = ? WHERE nombre_prv = '" + nombreProv + "'";
             }
 //PARA ELIMINAR
             if (comboBox.equals("Eliminar")) {
@@ -336,26 +343,29 @@ public class addCambioProv extends javax.swing.JFrame {
             if (eliminado == false) {
                 try {
                     PreparedStatement stm = reg.prepareStatement(q);
-                    if (jTextField4.getText().length() > 10 || jTextField4.getText().length() < 10) {
-                        JOptionPane.showMessageDialog(rootPane, "El numero telefonico debe ser de 10 digitos.");
-                        jTextField4.setText(null);
+                    if (matcher.matches()) {
+                        if (jTextField4.getText().length() == 10) {
+                            stm.setString(1, jTextField4.getText());//Telefono
+
+                            stm.setString(2, jTextField3.getText().toUpperCase());//Direccion
+                            stm.setString(3, jTextField6.getText());//Email
+
+                            stm.executeUpdate();
+
+                            JOptionPane.showMessageDialog(rootPane, "¡Proveedor modificado con exito!");
+                            jTextField1.setText(null);
+                            jTextField4.setText(null);
+                            jTextField2.setText(null);
+                            jTextField6.setText(null);
+                            jTextField3.setText(null);
+
+                            clearAll();
+                        } else {
+                            JOptionPane.showMessageDialog(rootPane, "ERROR, El numero telefonico debe ser de 10 digitos");
+                        }
                     } else {
-                        stm.setString(1, jTextField4.getText());//Telefono
-                        System.out.println(jTextField4.getText());
+                        JOptionPane.showMessageDialog(rootPane, "ERROR, Debes seguir el formato de un e-mail ejemplo: example@text.com");
                     }
-                    stm.setString(2, jTextField3.getText().toUpperCase());//Direccion
-                    stm.setString(3, jTextField6.getText().toUpperCase());//Email
-                    
-                    stm.executeUpdate();
-
-                    JOptionPane.showMessageDialog(rootPane, "¡Proveedor modificado con exito!");
-                    jTextField1.setText(null);
-                    jTextField4.setText(null);
-                    jTextField2.setText(null);
-                    jTextField6.setText(null);
-                    jTextField3.setText(null);
-
-                    clearAll();
                 } catch (SQLException ex) {
                     System.out.println("Error: " + ex);
                 }
