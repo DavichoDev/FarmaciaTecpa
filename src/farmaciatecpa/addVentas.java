@@ -133,6 +133,8 @@ public class addVentas extends javax.swing.JFrame implements Printable {
 
                     if (res.getString("tipo_prod").equals("CONTROLADO")) {
                         this.esControlado = addReceta.variable;
+                    }else{
+                        this.esControlado = 0;
                     }
 
                     if (esControlado == 1 && jCheckBox2.isSelected()) {
@@ -211,7 +213,8 @@ public class addVentas extends javax.swing.JFrame implements Printable {
 
                     if (res.getString("tipo_prod").equals("CONTROLADO")) {
                         this.esControlado = addReceta.variable;
-                        System.out.println("CUADO ES CONTROLADO: " + addReceta.variable);
+                    }else{
+                        this.esControlado = 0;
                     }
 
                     if (esControlado == 1 && jCheckBox2.isSelected()) {
