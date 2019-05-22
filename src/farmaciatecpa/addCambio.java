@@ -434,7 +434,7 @@ public class addCambio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, e);
         }
         con.desconectar();
-
+        clearAll();
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -279,7 +279,7 @@ public class addCambioProv extends javax.swing.JFrame {
                 jTextField6.setText(res.getString("email_prv"));
                 this.pressed = true;
             } else {
-                JOptionPane.showMessageDialog(rootPane, "Este producto no esta registrado");
+                JOptionPane.showMessageDialog(rootPane, "Este proveedor no esta registrado");
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(rootPane, e);
@@ -313,7 +313,7 @@ public class addCambioProv extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, e);
         }
         con.desconectar();
-
+        clearAll();
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -406,7 +406,7 @@ public class addCambioProv extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4KeyTyped
 
     /**
-     * @param args the command line arguments
+    jaja * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
